@@ -4,3 +4,5 @@
 * express
 * sequelize
 * graphql
+
+## Задание завершено не полностью
