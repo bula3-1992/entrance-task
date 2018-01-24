@@ -65,6 +65,9 @@ function renderNewInput(data, elementToRender){
 	if(queries.slice(17,22) != ''){
 		htmlToRender += queries.slice(17,22);
 	} 
+	else{
+		htmlToRender += '08:00';
+	}
 	htmlToRender += '" type="text" onchange="changeRecomendations();";>\
 				</div>	\
 				<p style="letter-spacing: 0.47px; display: inline-block; width: 14px;">—</p> \
@@ -74,6 +77,9 @@ function renderNewInput(data, elementToRender){
 	if(queries.slice(23,28)!= ''){
 		htmlToRender += queries.slice(23,28);
 	} 
+	else{
+		htmlToRender += '22:59';
+	}
 	htmlToRender += '" type="text" onchange="changeRecomendations();";>\
 				</div>	\
 				<div class="form__users">\
