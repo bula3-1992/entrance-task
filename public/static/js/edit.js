@@ -253,11 +253,9 @@ function renderRooms(data, elementToRender){
 	}else{
 		//Если "Редактирование встречи"
 		var divToRender = '';	
-		var i=0;
-		for (var key in rooms){
-			divToRender+='					<input type="radio" name="list" value="' + rooms[key].id + '" id="list[' + i + ']" onclick="document.getElementById(\'radio\').parentElement.childNodes[1].innerHTML=\'Ваша переговорка\'">\
-							<label id="label-' + i + '" for="list[' + i + ']" onclick="hideLabels(this)"><span style="font-family: HelveticaNeue;">' + rooms[key].title + ' · ' + rooms[key].floor + ' этаж</span></label>';
-			i++;
+		for (i = 0; i < rooms.length; i++){
+			divToRender+='					<input type="radio" name="list" value="' + rooms[i].id + '" id="list[' + i + ']" onclick="document.getElementById(\'radio\').parentElement.childNodes[1].innerHTML=\'Ваша переговорка\'">\
+							<label id="label-' + i + '" for="list[' + i + ']" onclick="hideLabels(this)"><span style="font-family: HelveticaNeue;">' + rooms[i].title + ' · ' + rooms[i].floor + ' этаж</span></label>';
 		}
 		divToRender+='					<span id="button__uncheck" onclick="uncheck()">&nbsp;</span>';
 		elementToRender.innerHTML = divToRender;
