@@ -42,21 +42,21 @@
 	<body class="b-page">
 		<div class="head">
 			<div class="logo">
-				<a class="logo__link" href="http://www.yandex.ru/">Яндекс Переговорки</a>
+				<a class="logo__link" href="/">Яндекс Переговорки</a>
 			</div>
 			<div class="head-buttons">
-				<a class="button__newmeeting" href="https://passport.yandex.ru/passport?mode=passport"><span class="font__newmeeting">Создать встречу</span></a>
+				<a class="button__newmeeting" href="/event?new"><span class="font__newmeeting">Создать встречу</span></a>
 			</div>
 		</div>
 		<div class="content">
 			<div class="schedule-container">
 				<div class="schedule-header">
 					<div class="schedule-header__calendar" id="scrollable_header1">
-						<a class="button__previousdate" href="https://academy.yandex.ru/events/frontend/shri_msk-2018/"><</a>
-						<a class="button__currentdate" href="https://academy.yandex.ru/events/frontend/shri_msk-2018/">
+						<a class="button__previousdate" href="#" onclick="previousDay()"><</a>
+						<a id="button-calendar" class="button__currentdate" href="#" onclick="show_calendar(this)"> 
 							<span id="font__date">0 янв · Сегодня</span>
 						</a>
-						<a class="button__nextdate" href="https://academy.yandex.ru/events/frontend/shri_msk-2018/">></a>
+						<a class="button__nextdate" href="#" onclick="nextDay()">></a>
 					</div>
 					<div class="schedule-header__timeline" id="scrollable_header2">
 						<div class="timeline-topinfo" id="timeline-hand">
@@ -90,10 +90,52 @@
 				</div>
 			</div>
 		</div>
-		<div class="footer-wrap">
-			<div class="footer">
-				<a class="footer__link" href="https://feedback2.yandex.ru/academy/"><span class="font__newmeeting">Обратная связь</span></a>
+		<div id="popup">		
+			<div class="tooltip">
 			</div>
+			<div class="triangle"></div>	
+		</div>		
+		<div id="calendar-wrapper" style="visibility: hidden;">		
+			<div id="calendar-wrapper-pan" align=center>
+				<div style="width:170px; padding:27px 9px; float:left; margin-left: 4px;">
+					<table id="calendar1" class="calendar" border="0" cellspacing="0" cellpadding="1">
+						<thead>
+							<tr><td colspan="7">
+							<tr><td>Пн<td>Вт<td>Ср<td>Чт<td>Пт<td>Сб<td>Вс
+						</thead>
+						<tbody></tbody>
+					</table>
+				</div>		
+				<div style="width:170px; padding:27px 9px; float:left;">
+					<table id="calendar2" class="calendar"  border="0" cellspacing="0" cellpadding="1">
+						<thead>
+							<tr><td colspan="7">
+							<tr><td>Пн<td>Вт<td>Ср<td>Чт<td>Пт<td>Сб<td>Вс
+						</thead>
+						<tbody></tbody>
+					</table>
+				</div>		
+				<div style="width:170px; padding:27px 9px; float:left;">
+					<table id="calendar3" class="calendar"  border="0" cellspacing="0" cellpadding="1">
+						<thead>
+							<tr><td colspan="7">
+							<tr><td>Пн<td>Вт<td>Ср<td>Чт<td>Пт<td>Сб<td>Вс
+						</thead>
+						<tbody></tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="schedule-row__room" style="position: absolute; height: 90%; z-index:-1; bottom: 0"></div>
+		<div id="popup2" style="height: 252px;">	
+			<div class="popup2__icon2">
+			</div>	
+			<span id="popup2__message">&nbsp</span>			
+			<div class="popup2__wrapper2">			
+				<a class="popup2__link" href="#" onclick="closePopup2()" style="background: #007DFF;"><span class="font__newmeeting">Хорошо</span></a>
+			</div>
+		</div>	
+		<div id="bg">		
 		</div>
 	</body>
 </html>

@@ -44,7 +44,7 @@ input EventInput {
 
 type Query {
   user(id: ID!): User
-  users: [User]
+  users(containsId: [ID]): [User]
   event(id: ID!): Event
   events: [Event]
   eventsByRoom(roomId: Int): [Event]

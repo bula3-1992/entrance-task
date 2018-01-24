@@ -1,7 +1,18 @@
-window.onscroll = function (e) {  
-	//Функция которая мотает элемент страницы с Заголовком таймлайна, т.е. часы, стрелка
-	document.getElementById('scrollable_header1').style.left = '-' + window.pageXOffset + 'px';
-	document.getElementById('scrollable_header2').style.left = '-' + window.pageXOffset + 'px';
+function contentScroll () {  
+	//Функция которая мотает элемент "Названия комнат и этажей"
+	row__rooms2 = document.querySelectorAll(".schedule-row__room2");
+	for(var i = 0; i < row__rooms2.length; i++) {
+		row__rooms2[i].style.left = document.getElementById("content").scrollLeft + 'px';
+		if(document.getElementById("content").scrollLeft > 181){
+			row__rooms2[i].style.visibility = "visible";
+		}else{
+			row__rooms2[i].style.visibility = "hidden";
+		}
+	}
+	floors = document.querySelectorAll(".floor");
+	for(var i = 0; i < floors.length; i++) {
+		floors[i].style.left = (document.getElementById("content").scrollLeft + 16) + 'px';
+	}
 }  
 function getQueryParams () {
 	//Получаем параметры поиска адресной строки
@@ -58,6 +69,7 @@ function changeData(date,month,year){
 	hide_tooltip();
 	render_calendar();
 }
+//window.onload = function (e) {  
 //Подгружаем содержимое страницы
 document.addEventListener('DOMContentLoaded', function(event) {	
 	queries = getQueryParams();
@@ -96,13 +108,9 @@ function httpPostAsync(request, callback, elementToRender) {
 			callback(myArr, elementToRender);
 		}
 	};	
-	//xhr.responseType = 'json';
 	xhr.open("POST", "/graphql");
 	xhr.setRequestHeader("Content-Type", "application/json");
 	xhr.setRequestHeader("Accept", "application/json");
-	//xhr.onload = function () {
-	//	callback(xhr.response, elementToRender);
-	//}
 	xhr.send(JSON.stringify({query: request}));	
 }
 /*
@@ -116,10 +124,30 @@ function renderRooms(data, elementToRender){
 	rooms.sort(function(a,b){
 		return parseInt(a.floor) - parseInt(b.floor);
 	});
-	var htmlToRender = '			<ul>';
+	var htmlToRender = '<div  id="timeline-hand2" class="schedule-scale schedule-scale-blue"></div>\
+					<ul style="margin-left: 181px;">\
+						<li class="timeline-topinfo"><div class="schedule-scale"></div></li>\
+						<li class="timeline-topinfo"><div class="schedule-scale"></div></li>\
+						<li class="timeline-topinfo"><div class="schedule-scale"></div></li>\
+						<li class="timeline-topinfo"><div class="schedule-scale"></div></li>\
+						<li class="timeline-topinfo"><div class="schedule-scale"></div></li>\
+						<li class="timeline-topinfo"><div class="schedule-scale"></div></li>\
+						<li class="timeline-topinfo"><div class="schedule-scale"></div></li>\
+						<li class="timeline-topinfo"><div class="schedule-scale"></div></li>\
+						<li class="timeline-topinfo"><div class="schedule-scale"></div></li>\
+						<li class="timeline-topinfo"><div class="schedule-scale"></div></li>\
+						<li class="timeline-topinfo"><div class="schedule-scale"></div></li>\
+						<li class="timeline-topinfo"><div class="schedule-scale"></div></li>\
+						<li class="timeline-topinfo"><div class="schedule-scale"></div></li>\
+						<li class="timeline-topinfo"><div class="schedule-scale"></div></li>\
+						<li class="timeline-topinfo"><div class="schedule-scale"></div></li>\
+						<li class="timeline-topinfo"><div class="schedule-scale"></div></li>\
+						</li>\
+					</ul>	\
+					<ul>';
 	var floor = null;
 	p_top = new Array();
-	p_top_sum = 46 + 71;//Суммируем и запоминаем высоту для каждой переговорки - это нам пригодится
+	p_top_sum = 136;//Суммируем и запоминаем высоту для каждой переговорки - это нам пригодится
 	for (var key in rooms){
 		if(rooms[key].floor !== floor){
 			floor = rooms[key].floor;
@@ -128,14 +156,15 @@ function renderRooms(data, elementToRender){
 			htmlToRender += '				</li> \n';
 			p_top_sum += 37;
 		} 
-		p_top_sum += 52;
+		p_top_sum += 60;
 		p_top[rooms[key].id] = p_top_sum;
 		htmlToRender += '				<li class="schedule-row">';
 		htmlToRender += '					<div class="schedule-row__room"><span id="title-' + rooms[key].id + '" class="title">' + rooms[key].title + '</span><span class="capacity">' + rooms[key].capacity + ' человек</span></div> \n';						
 		htmlToRender += '					<div class="schedule-row__timeline"> \n';
 		htmlToRender += '						<ul id="schedule-events-roomId-' + rooms[key].id + '"> \n';
-		htmlToRender += '						</ul> \n';
+		htmlToRender += '						</ul> \n';		
 		htmlToRender += '					</div> \n';	
+		htmlToRender += '					<div class="schedule-row__room2">' + rooms[key].title + '</div> \n';						
 		htmlToRender += '				</li> \n';
 	}
 	htmlToRender += '			</ul>';
@@ -145,7 +174,8 @@ function renderRooms(data, elementToRender){
 	points_of_scale = document.querySelectorAll("#timeline-hand-value");//Заголовки Часов на полосе времени
 	if((current_time - start_of_scale) > 0 && (current_time - start_of_scale) < 54000000){
 		//Синий ползунок шкалы времени - текущее время
-		document.getElementById('timeline-hand').style.left = (parseInt(len_now/54545)) + 'px';
+		document.getElementById('timeline-hand').style.left = (parseInt(len_now/54545) + 181) + 'px';
+		document.getElementById('timeline-hand2').style.left = (parseInt(len_now/54545) + 189.5) + 'px';
 		for(var i = 0; i < points_of_scale.length; i++) {	//окрашиваем в серый пройденное время
 			temp = points_of_scale[i].innerHTML;
 			if(parseInt(temp) <= current_time.getHours()){
@@ -153,7 +183,8 @@ function renderRooms(data, elementToRender){
 			}
 		}
 	}else{
-		document.getElementById('timeline-hand').style.left = '10000px';
+		document.getElementById('timeline-hand').style.left = '-100px';
+		document.getElementById('timeline-hand2').style.left = '-100px';
 		if(current_time < start_of_scale){
 			for(var i = 0; i < points_of_scale.length; i++) {	
 				points_of_scale[i].style.color = "#858E98";
@@ -265,14 +296,14 @@ function renderEvents(data, elementToRender){
 	}	
 	for (var myvar in mask){	
 		//Выводим кнопки "Создать .."	
-		//Тут можно было соптимизировать, но пусть так..	
+		//Тут можно было соптимизировать, но пусть так..
 		if((current_time - start_of_scale) > 0){	
 			if((current_time - start_of_scale) < 86400000){
 				//Сегодняшний день
 				if(mask[myvar].dateStart.slice(0, 2) > document.getElementById('timeline-hand').childNodes[1].innerHTML.slice(0, 2)){
 					//Будущее время
 					divToRender += '						<li class="single-event-empty" data-start="' + mask[myvar].dateStart + '" data-end="' + mask[myvar].dateEnd + '" id="event-new-' + roomId + '" onmouseover="highlight_on(this)" onmouseout="highlight_off(this)" onmousedown="highlight_click(this)"> \n';						
-					divToRender += '							<a href="/event?new-' + roomId + '-' + ("0" + current_time.getDate()).slice(-2) + '-' + ("0" + (current_time.getMonth()+1)).slice(-2) + '-' + current_time.getFullYear() + '-' + mask[myvar].dateStart + '-' + mask[myvar].dateEnd + '"> \n';
+					divToRender += '							<a href="/mobile/event?new-' + roomId + '-' + ("0" + current_time.getDate()).slice(-2) + '-' + ("0" + (current_time.getMonth()+1)).slice(-2) + '-' + current_time.getFullYear() + '-' + mask[myvar].dateStart + '-' + mask[myvar].dateEnd + '"> \n';
 					divToRender += '								+ \n';
 					divToRender += '							</a> \n';
 					divToRender += '						</li> \n';
@@ -281,7 +312,7 @@ function renderEvents(data, elementToRender){
 					&& document.getElementById('timeline-hand').childNodes[1].innerHTML.slice(3, 5) < 50){
 					//Текущий час - выводим только если промежуток для кнопки больше 10 минут
 					divToRender += '						<li class="single-event-empty" data-start="' + mask[myvar].dateStart + '" data-end="' + mask[myvar].dateEnd + '" id="event-new-' + roomId + '" onmouseover="highlight_on(this)" onmouseout="highlight_off(this)" onmousedown="highlight_click(this)"> \n';						
-					divToRender += '							<a href="/event?new-' + roomId + '-' + ("0" + current_time.getDate()).slice(-2) + '-' + ("0" + (current_time.getMonth()+1)).slice(-2) + '-' + current_time.getFullYear() + '-' + mask[myvar].dateStart + '-' + mask[myvar].dateEnd + '"> \n';
+					divToRender += '							<a href="/mobile/event?new-' + roomId + '-' + ("0" + current_time.getDate()).slice(-2) + '-' + ("0" + (current_time.getMonth()+1)).slice(-2) + '-' + current_time.getFullYear() + '-' + mask[myvar].dateStart + '-' + mask[myvar].dateEnd + '"> \n';
 					divToRender += '								+ \n';
 					divToRender += '							</a> \n';
 					divToRender += '						</li> \n';
@@ -290,7 +321,7 @@ function renderEvents(data, elementToRender){
 			else{
 				//Завтрашний день
 				divToRender += '						<li class="single-event-empty" data-start="' + mask[myvar].dateStart + '" data-end="' + mask[myvar].dateEnd + '" id="event-new-' + roomId + '" onmouseover="highlight_on(this)" onmouseout="highlight_off(this)" onmousedown="highlight_click(this)"> \n';						
-				divToRender += '							<a href="/event?new-' + roomId + '-' + ("0" + current_time.getDate()).slice(-2) + '-' + ("0" + (current_time.getMonth()+1)).slice(-2) + '-' + current_time.getFullYear() + '-' + mask[myvar].dateStart + '-' + mask[myvar].dateEnd + '"> \n';
+				divToRender += '							<a href="/mobile/event?new-' + roomId + '-' + ("0" + current_time.getDate()).slice(-2) + '-' + ("0" + (current_time.getMonth()+1)).slice(-2) + '-' + current_time.getFullYear() + '-' + mask[myvar].dateStart + '-' + mask[myvar].dateEnd + '"> \n';
 				divToRender += '								+ \n';
 				divToRender += '							</a> \n';
 				divToRender += '						</li> \n';
@@ -317,7 +348,7 @@ function renderEvents(data, elementToRender){
 			len=data_end-data_start;
 			width = parseInt(len/54540);
 			eventToRender.style.width = width + 'px';						
-			textToRender = 'tooltip(this,\'<a class="button__editevent" href="/event?' + events[key].id + '">/</a><span class="event-title">' + events[key].title + '</span><br><span class="event-description">';
+			textToRender = 'tooltip(this,\'<a class="button__editevent" href="/mobile/event?' + events[key].id + '">/</a><span class="event-title">' + events[key].title + '</span><br><span class="event-description">';
 			dayWithZero = events[key].dateStart.slice(8,10);
 			monthWithZero = events[key].dateStart.slice(5,7);
 			textToRender += parseInt(dayWithZero) + ' ' + monthNamesFull[parseInt(monthWithZero)-1] + ', ' + eventToRender.getAttribute('data-start') + '—' + eventToRender.getAttribute('data-end') + '  ·  ' + events[key].room.title + '</span>';
@@ -359,7 +390,6 @@ function renderEvents(data, elementToRender){
 		width = parseInt(len/54540);
 		freeSlotsToRender[i].style.width = width + 'px';	
 	}
-	
 	//Проверяем доступность переговорки
 	//Если есть хоть одна кнопка "Создать встречу" - название комнаты будет светиться черным, иначе серым, т.е. недоступно
 	row = elementToRender.parentElement.parentElement;
@@ -368,6 +398,9 @@ function renderEvents(data, elementToRender){
 		if(row.childNodes[1].childNodes[0] && row.childNodes[1].childNodes[1]){
 			row.childNodes[1].childNodes[0].setAttribute("class","title a_grey");
 			row.childNodes[1].childNodes[1].setAttribute("class","capacity a_grey");
+		}
+		if(row.childNodes[5]){
+			row.childNodes[5].setAttribute("class","schedule-row__room2 a_grey");
 		}
 	}
 }
@@ -385,29 +418,16 @@ function renderMiniMessage(data, elementToRender){
 function tooltip(el,txt,x,y) {
 	tipobj=document.getElementById('popup');
 	tipobj.childNodes[1].innerHTML = txt;
-	op = 0.1;
-	tipobj.style.opacity = op;
 	tipobj.style.visibility="visible";
-	tipobj.style.left=x + 245 + "px";
-	tipobj.style.top=(y-13) + "px";
-	appear();
-}
-function appear() {
-	if(op < 1) {
-		op += 0.1;
-		tipobj.style.opacity = op;
-		tipobj.style.filter = 'alpha(opacity='+op*100+')';
-		t = setTimeout('appear()', 30);
-	}
+	tipobj.childNodes[3].style.left=(x + 173 - document.getElementById("content").scrollLeft) + "px";
+	tipobj.style.top=y + "px";
 }
 function hide_tooltip() {
 	document.getElementById('popup').style.visibility='hidden';
 }
 //Календарь
 function render_calendar(){
-	calendar('calendar1', current_time.getFullYear(), current_time.getMonth()-1);
-	calendar('calendar2', current_time.getFullYear(), current_time.getMonth());
-	calendar('calendar3', current_time.getFullYear(), current_time.getMonth()+1);
+	calendar('calendar', current_time.getFullYear(), current_time.getMonth());
 }
 function calendar(id, year, month) {
 	var Dlast = new Date(year,month+1,0).getDate(),

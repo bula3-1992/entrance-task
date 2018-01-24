@@ -14,7 +14,11 @@ user (root, { id }) {
     return models.User.findById(id);
   },
   users (root, args, context) {
-    return models.User.findAll({}, context);
+	  if(args.containsId){
+		return models.User.findAll({where: { id: args.containsId}}, context);		  
+	  }else{
+		return models.User.findAll({}, context);
+	  }
   },
 room (root, { id }) {
     return models.Room.findById(id);

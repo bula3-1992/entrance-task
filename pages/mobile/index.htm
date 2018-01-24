@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+    <head>
+		<meta name="viewport" content="width=device-width, user-scalable=no" />
+		<meta name="MobileOptimized" content="width">
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>Yandex Peregovorki - BBM</title>
+		<!--[if gt IE 9]>
+			<!-->
+			<link rel="stylesheet" href="static/static.css">
+			<!--
+		<![endif]-->
+		<!--[if IE 6]>
+			<link rel="stylesheet" href="//yastatic.net/yandex-events-frontend2/1.22/desktop.bundles/common/_common.ie6.css"/>
+		<![endif]-->
+		<!--[if IE 7]>
+			<link rel="stylesheet" href="//yastatic.net/yandex-events-frontend2/1.22/desktop.bundles/common/_common.ie7.css"/>
+		<![endif]-->
+		<!--[if IE 8]>
+			<link rel="stylesheet" href="//yastatic.net/yandex-events-frontend2/1.22/desktop.bundles/common/_common.ie8.css"/>
+		<![endif]-->
+		<!--[if IE 9]>
+			<link rel="stylesheet" href="//yastatic.net/yandex-events-frontend2/1.22/desktop.bundles/common/_common.ie9.css"/>
+		<![endif]-->
+		<!--[if IE 6]>
+			<link rel="stylesheet" href="//yastatic.net/yandex-events-frontend2/1.22/desktop.bundles/survey/_survey.ie6.css"/>
+		<![endif]-->
+		<!--[if IE 7]>
+			<link rel="stylesheet" href="//yastatic.net/yandex-events-frontend2/1.22/desktop.bundles/survey/_survey.ie7.css"/>
+		<![endif]-->
+		<!--[if IE 8]>
+			<link rel="stylesheet" href="//yastatic.net/yandex-events-frontend2/1.22/desktop.bundles/survey/_survey.ie8.css"/>
+		<![endif]-->
+		<!--[if IE 9]>
+			<link rel="stylesheet" href="//yastatic.net/yandex-events-frontend2/1.22/desktop.bundles/survey/_survey.ie9.css"/>
+		<![endif]-->
+		<script src="static/js/jquery.js"></script>
+		<script src="static/js/common.js"></script>
+		<meta name="description" content="Переговорки в Яндексе — организация вашего коммуникационного процесса.">
+		<meta name="keywords" content="яндекс, переговорки, комнаты, семинары, проекты, доклады, видео, обучение">
+	</head>
+	<body class="b-page">
+		<div class="head">
+			<div class="logo">
+				<a class="logo__link" href="/">Яндекс Переговорки</a>
+			</div>
+			<div class="schedule-header__calendar">
+				<a class="button__previousdate" href="#" onclick="previousDay()"><</a>
+				<a id="button-calendar" class="button__currentdate" href="#" onclick="show_calendar(this)"> 
+					<span id="font__date">0 янв · Сегодня</span>
+				</a>
+				<a class="button__nextdate" href="#" onclick="nextDay()">></a>
+			</div>
+		</div>
+		<div id="content" onscroll="contentScroll()">
+			<div class="schedule-container">
+				<div class="schedule-header">
+					<div class="schedule-header__timeline" id="scrollable_header">
+						<div class="timeline-topinfo" id="timeline-hand">
+							<span>00:00</span>
+							<div class="schedule-scale schedule-scale-blue"></div>
+						</div>
+						<ul>
+							<li class="timeline-topinfo"><span id="timeline-hand-value">8:00</span></li>
+							<li class="timeline-topinfo"><span id="timeline-hand-value">9</span></li>
+							<li class="timeline-topinfo"><span id="timeline-hand-value">10</span></li>
+							<li class="timeline-topinfo"><span id="timeline-hand-value">11</span></li>
+							<li class="timeline-topinfo"><span id="timeline-hand-value">12</span></li>
+							<li class="timeline-topinfo"><span id="timeline-hand-value">13</span></li>
+							<li class="timeline-topinfo"><span id="timeline-hand-value">14</span></li>
+							<li class="timeline-topinfo"><span id="timeline-hand-value">15</span></li>
+							<li class="timeline-topinfo"><span id="timeline-hand-value">16</span></li>
+							<li class="timeline-topinfo"><span id="timeline-hand-value">17</span></li>
+							<li class="timeline-topinfo"><span id="timeline-hand-value">18</span></li>
+							<li class="timeline-topinfo"><span id="timeline-hand-value">19</span></li>
+							<li class="timeline-topinfo"><span id="timeline-hand-value">20</span></li>
+							<li class="timeline-topinfo"><span id="timeline-hand-value">21</span></li>
+							<li class="timeline-topinfo"><span id="timeline-hand-value">22</span></li>
+							<li class="timeline-topinfo"><span id="timeline-hand-value">23</span></li>
+							</li>
+						</ul>
+					</div>				
+				</div>		
+				<div class="schedule-space">
+				</div>						
+				<div class="schedule" id="content-area">
+				</div>
+			</div>
+		</div>
+		<div id="popup">		
+			<div class="tooltip">
+			</div>
+			<div class="triangle"></div>	
+		</div>		
+		<div id="calendar-wrapper" style="visibility: hidden;">		
+			<div id="calendar-wrapper-pan" align=center>
+				<div style="padding:27px 9px;">
+					<table id="calendar" class="calendar" border="0" cellspacing="0" cellpadding="1">
+						<thead>
+							<tr><td colspan="7">
+							<tr><td>Пн<td>Вт<td>Ср<td>Чт<td>Пт<td>Сб<td>Вс
+						</thead>
+						<tbody></tbody>
+					</table>
+				</div>	
+			</div>
+		</div>
+		<div id="popup2" style="height: 252px;">	
+			<div class="popup2__icon2">
+			</div>	
+			<span id="popup2__message">&nbsp</span>			
+			<div class="popup2__wrapper2">			
+				<a class="popup2__link" href="#" onclick="closePopup2()" style="background: #007DFF;"><span class="white">Хорошо</span></a>
+			</div>
+		</div>	
+		<div id="bg">		
+		</div>
+	</body>
+</html>
